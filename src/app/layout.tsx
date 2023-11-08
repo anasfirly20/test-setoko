@@ -6,7 +6,10 @@ import { Providers } from "./providers";
 // Components
 import Navbar from "./components/Navbar/Navbar";
 
-const poppins = Poppins({subsets: ["latin"], weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']})
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Github Repositories Explorer",
@@ -21,9 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={poppins.className}>
+        <link rel="icon" href="/github-mark-white.svg" sizes="any" />
         <Providers>
           <Navbar />
-          {children}
+          <main>{children}</main>
         </Providers>
       </body>
     </html>
