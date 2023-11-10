@@ -12,14 +12,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // colors: {
-      //   spacecadet: "#1A334F",
-      //   gunmetal: "#182431",
-      //   dark: "#212121",
-      //   crayola: "#A7ADBB",
-      //   antiflash: "#EFF1F4",
-      //   lightgray: "#C7C7C7",
-      // },
+      colors: {
+        spacecadet: "#1A334F",
+        gunmetal: "#182431",
+        dark: "#212121",
+        crayola: "#A7ADBB",
+        antiflash: "#EFF1F4",
+        lightgray: "#C7C7C7",
+        //
+        "custom-green": "#006400",
+      },
       padding: {
         shorter4: "1vw",
         shorter3: "2vw",
