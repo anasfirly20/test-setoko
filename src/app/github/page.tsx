@@ -35,12 +35,23 @@ export default function Home() {
     }
   };
 
+  const handleSearch = () => {
+    if (searchString) {
+      getUsers(searchString);
+    }
+  };
+
   return (
     <section className="flex flex-col justify-center gap-5 pb-shorter">
       <Input
         placeholder="Search User..."
         isClearable
         onChange={(e) => setSearchString(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSearch();
+          }
+        }}
       />
       <Button
         size="lg"
@@ -52,11 +63,7 @@ export default function Home() {
             className="text-2xl"
           />
         }
-        onClick={() => {
-          if (searchString) {
-            getUsers(searchString);
-          }
-        }}
+        onClick={handleSearch}
         isLoading={isLoading}
       >
         Search
@@ -64,14 +71,14 @@ export default function Home() {
       {data?.length > 0 ? (
         <>
           <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-            {data?.map((e: any) => (
+            {data?.map((item: any) => (
               <>
                 <div
-                  key={e?.id}
+                  key={item.id}
                   className="border-2 p-2 relative bg-white rounded-md"
                 >
                   <a
-                    href={e?.html_url}
+                    href={item.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -81,37 +88,35 @@ export default function Home() {
                         src={gitMark}
                         width={35}
                         height={35}
-                        className="absolute top-5 right-5 hover:scale-110 transition-transform"
+                        className="absolute z-10 top-5 right-5 hover:scale-110 transition-transform"
                       />
                     </Tooltip>
                   </a>
                   <figure className="w-full">
                     <Skeleton isLoaded={!isLoading}>
                       <Image
-                        src={
-                          "https://avatars.githubusercontent.com/u/65725801?v=4"
-                        }
+                        src={item.avatar_url}
                         width={0}
                         height={0}
                         sizes="100vw"
-                        style={{ width: "100%", height: "auto" }} // optional
-                        alt={`Picture of ${e?.login}`}
+                        style={{ width: "100%", height: "auto" }}
+                        alt={`Picture of ${item.login}`}
                       />
                     </Skeleton>
                   </figure>
                   <div className="text-black mt-5 space-y-3">
                     <Skeleton isLoaded={!isLoading}>
                       <p className="text-center font-semibold text-xl">
-                        {e?.login}
+                        {item.login}
                       </p>
                     </Skeleton>
                     <div className="flex justify-between">
                       <Skeleton isLoaded={!isLoading}>
-                        <p>Git score: {e?.score}</p>
+                        <p>Git score: {item.score}</p>
                       </Skeleton>
                       <Skeleton isLoaded={!isLoading}>
                         <Link
-                          href={`/github/${e?.login}`}
+                          href={`/github/${item.login}`}
                           className="text-crayola hover:underline"
                         >
                           Repositories
