@@ -10,22 +10,26 @@ import CardEmpty from "./components/CardEmpty";
 import { useQuery } from "@tanstack/react-query";
 
 // api
-import { getAllPosts } from "../../api/routes/post";
+import { getUsersByQueries } from "../../api/routes/users";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  // GET users
-  const { isLoading, isError, data, error } = useQuery({
-    queryKey: ["todos"],
-    queryFn: getAllPosts,
+  const [searchString, setSearchString] = useState("");
+  const { isLoading, data } = useQuery({
+    queryKey: ["users", searchString],
+    queryFn: () => searchString && getUsersByQueries(searchString),
   });
-  console.log("RESULT >>", data);
 
   return (
     <section className="flex flex-col justify-center gap-5">
-      <Input placeholder="Search User..." isClearable />
+      <Input
+        placeholder="Search User..."
+        isClearable
+        onChange={(e) => setSearchString(e.target.value)}
+      />
       <Button
         size="lg"
-        className="w-[15%] text-white bg-custom-green text-base"
+        className="w-full lg:w-[15%] text-white bg-custom-green text-base"
         endContent={
           <Icon
             icon="material-symbols:search"
