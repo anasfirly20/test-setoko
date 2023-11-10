@@ -4,6 +4,7 @@
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { Tooltip } from "@nextui-org/tooltip";
+import { Skeleton } from "@nextui-org/skeleton";
 
 import { Icon } from "@iconify/react";
 import CardEmpty from "../components/CardEmpty";
@@ -26,7 +27,6 @@ export default function Home() {
       setIsLoading(true);
       const res = await getUsersByQueries(string);
       const filteredData = res?.items?.slice(0, 5);
-      console.log("filteredData >", filteredData);
       setData(filteredData);
       setIsLoading(false);
     } catch (error) {
@@ -63,32 +63,30 @@ export default function Home() {
       </Button>
       {data?.length > 0 ? (
         <>
-          {isLoading ? (
-            "LOADING..."
-          ) : (
-            <>
-              <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
-                {data?.map((e: any) => (
-                  <div
-                    key={e?.id}
-                    className="border-2 p-2 relative bg-white rounded-md"
+          <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+            {data?.map((e: any) => (
+              <>
+                <div
+                  key={e?.id}
+                  className="border-2 p-2 relative bg-white rounded-md"
+                >
+                  <a
+                    href={e?.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <a
-                      href={e?.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Tooltip placement="top-start" content="Github profile">
-                        <Image
-                          alt="git Logo"
-                          src={gitMark}
-                          width={35}
-                          height={35}
-                          className="absolute top-5 right-5 hover:scale-110 transition-transform"
-                        />
-                      </Tooltip>
-                    </a>
-                    <figure className="w-full">
+                    <Tooltip placement="top-start" content="Github profile">
+                      <Image
+                        alt="git Logo"
+                        src={gitMark}
+                        width={35}
+                        height={35}
+                        className="absolute top-5 right-5 hover:scale-110 transition-transform"
+                      />
+                    </Tooltip>
+                  </a>
+                  <figure className="w-full">
+                    <Skeleton isLoaded={!isLoading}>
                       <Image
                         src={
                           "https://avatars.githubusercontent.com/u/65725801?v=4"
@@ -99,21 +97,32 @@ export default function Home() {
                         style={{ width: "100%", height: "auto" }} // optional
                         alt={`Picture of ${e?.login}`}
                       />
-                    </figure>
-                    <div className="text-black mt-5">
-                      <p>Jack Sparrsow</p>
-                      <Link
-                        href={`/github/${e?.login}`}
-                        className="text-crayola"
-                      >
-                        Repositories
-                      </Link>
+                    </Skeleton>
+                  </figure>
+                  <div className="text-black mt-5 space-y-3">
+                    <Skeleton isLoaded={!isLoading}>
+                      <p className="text-center font-semibold text-xl">
+                        {e?.login}
+                      </p>
+                    </Skeleton>
+                    <div className="flex justify-between">
+                      <Skeleton isLoaded={!isLoading}>
+                        <p>Git score: {e?.score}</p>
+                      </Skeleton>
+                      <Skeleton isLoaded={!isLoading}>
+                        <Link
+                          href={`/github/${e?.login}`}
+                          className="text-crayola hover:underline"
+                        >
+                          Repositories
+                        </Link>
+                      </Skeleton>
                     </div>
                   </div>
-                ))}
-              </section>
-            </>
-          )}
+                </div>
+              </>
+            ))}
+          </section>
         </>
       ) : (
         <CardEmpty />
