@@ -10,4 +10,4 @@ Third, in order to run the app smoothly you need to generate a Personal access t
 
 Here is the link to the documentation to generate github's personal access token: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens
 
-Lastly, after all those steps, run "npm run dev" in your vs code to run the application in your local host
+Lastly, after all those steps, run "npm run dev" in your code editor to run the application in your local host
