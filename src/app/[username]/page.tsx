@@ -15,22 +15,27 @@ import {
 } from "@nextui-org/table";
 import { Pagination } from "@nextui-org/pagination";
 import { Spinner } from "@nextui-org/spinner";
+import { Button } from "@nextui-org/button";
 
 // Miscellaneous
 import { table_columns } from "@/constants/constants";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 // Utils
 import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
+import ErrorComponent from "@/components/ErrorComponent";
 
 export default function PageDetail({
   params,
 }: {
   params: { username: string };
 }) {
-  const { data, isLoading } = useQuery({
+  const router = useRouter();
+  const { data, isLoading, isError } = useQuery({
     queryKey: ["repo", params?.username],
     queryFn: () => getUserRepo(params?.username),
+    retry: 0,
   });
 
   // Pagination
@@ -45,9 +50,16 @@ export default function PageDetail({
     return data?.slice(start, end);
   }, [page, data]);
 
+  // Handle Error
+  if (isError) {
+    return <ErrorComponent onClick={() => window.location.reload()} />;
+  }
+
   return (
     <section>
-      <h1 className="text-2xl text-center mb-10">{params?.username}&apos;s repository</h1>
+      <h1 className="text-2xl text-center mb-10">
+        {params?.username}&apos;s repository
+      </h1>
       {isLoading ? (
         <section className="min-h-screen flex justify-center items-center">
           <Spinner color="success" label="Loading..." />
@@ -75,7 +87,9 @@ export default function PageDetail({
         >
           <TableHeader>
             {table_columns?.map((column, index: number) => (
-              <TableColumn key={index} width={30}>{column}</TableColumn>
+              <TableColumn key={index} width={30}>
+                {column}
+              </TableColumn>
             ))}
           </TableHeader>
           {items?.length > 0 ? (
@@ -106,9 +120,7 @@ export default function PageDetail({
                   <TableCell>
                     {item?.pushed_at ? dateConverter(item?.pushed_at) : null}
                   </TableCell>
-                  <TableCell>
-                    {item?.visibility}
-                  </TableCell>
+                  <TableCell>{item?.visibility}</TableCell>
                   <TableCell>
                     {item?.description ? item?.description : "-"}
                   </TableCell>

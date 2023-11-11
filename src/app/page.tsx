@@ -110,7 +110,7 @@ export default function Home() {
                       />
                     </Skeleton>
                   </figure>
-                  <div className="text-black mt-5 space-y-3">
+                  <div className="text-black mt-5 max-sm:mt-20 space-y-3">
                     <Skeleton isLoaded={!isLoading}>
                       <p className="text-center font-semibold text-xl">
                         {item?.login}
