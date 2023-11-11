@@ -18,7 +18,7 @@ import { Spinner } from "@nextui-org/spinner";
 
 // Miscellaneous
 import { table_columns } from "@/constants/constants";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 // Utils
 import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
@@ -32,10 +32,6 @@ export default function PageDetail({
     queryKey: ["repo", params?.username],
     queryFn: () => getUserRepo(params?.username),
   });
-
-  useEffect(() => {
-    console.log("data >", data);
-  }, [data]);
 
   // Pagination
   const [page, setPage] = useState(1);

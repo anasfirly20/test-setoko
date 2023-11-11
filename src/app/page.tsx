@@ -74,12 +74,12 @@ export default function Home() {
       </Button>
       {data?.length > 0 ? (
         <>
-          <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10">
+          <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
             {data?.map((item: any) => (
               <>
                 <div
                   key={item?.id}
-                  className="border-2 p-2 relative bg-white rounded-md"
+                  className="border-2 p-2 relative bg-white rounded-md hover:scale-110 transition-transform duration-300"
                 >
                   <a
                     href={item?.html_url}
