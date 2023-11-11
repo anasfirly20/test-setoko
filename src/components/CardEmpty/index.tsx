@@ -3,7 +3,7 @@ import githubMark from "../../../public/github-mark.svg";
 
 export default function CardEmpty() {
   return (
-    <section className="rounded-md flex flex-col justify-center items-center p-10 gap-10 py-longer">
+    <section className="rounded-md flex flex-col justify-center items-center p-10 gap-10 py-longer h-[60vh] sm:h-[80vh] lg:h-[70vh]">
       <Image
         src={githubMark}
         width={300}
