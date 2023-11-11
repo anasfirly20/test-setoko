@@ -5,7 +5,9 @@ export const getUsersByQueries = async (string: string) => {
   return res.data;
 };
 
-export const getUserRepo = async (string: string) => {
-  const res = await api.get(`/users/${string}/repos`);
+export const getUserRepo = async (string: string, page: number) => {
+  const res = await api.get(
+    `/users/${string}/repos?page=${page}&per_page=100&sort=created`
+  );
   return res.data;
 };

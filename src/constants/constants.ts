@@ -1,4 +1,5 @@
 export const table_columns: string[] = [
+  "NO",
   "NAME",
   "CREATION DATE",
   "LAST UPDATED",

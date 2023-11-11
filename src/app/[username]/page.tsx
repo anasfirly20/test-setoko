@@ -18,28 +18,26 @@ import { Spinner } from "@nextui-org/spinner";
 import { Button } from "@nextui-org/button";
 
 // Miscellaneous
-import { table_columns } from "@/constants/constants";
 import { useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
+import { table_columns } from "@/constants/constants";
 
 // Utils
 import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
-import ErrorComponent from "@/components/ErrorComponent";
 
 export default function PageDetail({
   params,
 }: {
   params: { username: string };
 }) {
-  const router = useRouter();
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["repo", params?.username],
-    queryFn: () => getUserRepo(params?.username),
-  });
-
   // Pagination
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["repo", params?.username],
+    queryFn: () => getUserRepo(params?.username, page),
+  });
+
   const pages = Math.ceil(data?.length / rowsPerPage);
 
   const items = useMemo(() => {
@@ -102,35 +100,43 @@ export default function PageDetail({
               isLoading={isLoading}
               loadingContent={<Spinner label="Loading..." />}
             >
-              {items?.map((item: any, index: number) => (
-                <TableRow key={item?.html_url}>
-                  <TableCell>
-                    <a
-                      className="hover:underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={item?.html_url}
-                    >
-                      {item?.full_name
-                        ? getStringAfterSlash(item?.full_name)
+              {items?.map((item: any, index: number) => {
+                const items_numbering = (page - 1) * rowsPerPage + index + 1;
+                return (
+                  <TableRow key={item?.html_url}>
+                    <TableCell>{items_numbering}</TableCell>
+                    <TableCell>
+                      <a
+                        className="hover:underline"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        href={item?.html_url}
+                      >
+                        {item?.full_name
+                          ? getStringAfterSlash(item?.full_name)
+                          : null}
+                      </a>
+                    </TableCell>
+                    <TableCell>
+                      {item?.created_at
+                        ? dateConverter(item?.created_at)
                         : null}
-                    </a>
-                  </TableCell>
-                  <TableCell>
-                    {item?.created_at ? dateConverter(item?.created_at) : null}
-                  </TableCell>
-                  <TableCell>
-                    {item?.updated_at ? dateConverter(item?.updated_at) : null}
-                  </TableCell>
-                  <TableCell>
-                    {item?.pushed_at ? dateConverter(item?.pushed_at) : null}
-                  </TableCell>
-                  <TableCell>{item?.visibility}</TableCell>
-                  <TableCell>
-                    {item?.description ? item?.description : "-"}
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell>
+                      {item?.updated_at
+                        ? dateConverter(item?.updated_at)
+                        : null}
+                    </TableCell>
+                    <TableCell>
+                      {item?.pushed_at ? dateConverter(item?.pushed_at) : null}
+                    </TableCell>
+                    <TableCell>{item?.visibility}</TableCell>
+                    <TableCell>
+                      {item?.description ? item?.description : "-"}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           ) : (
             <TableBody emptyContent={"No data to display."}>{[]}</TableBody>
