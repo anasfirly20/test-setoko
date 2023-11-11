@@ -50,8 +50,8 @@ export default function PageDetail({
   }, [page, data]);
 
   return (
-    <div>
-      <h1>BY ID {params?.username}</h1>
+    <section>
+      <h1 className="text-2xl text-center mb-10">{params?.username}&apos;s repository</h1>
       {isLoading ? (
         <section className="min-h-screen flex justify-center items-center">
           <Spinner color="success" label="Loading..." />
@@ -124,6 +124,6 @@ export default function PageDetail({
           )}
         </Table>
       )}
-    </div>
+    </section>
   );
 }
