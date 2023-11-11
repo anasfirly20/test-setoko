@@ -1,7 +1,6 @@
 "use client";
 
 // Api
-import { useQuery } from "@tanstack/react-query";
 import { getUserRepo } from "../../../api/routes/github";
 
 // Components
@@ -15,34 +14,47 @@ import {
 } from "@nextui-org/table";
 import { Pagination } from "@nextui-org/pagination";
 import { Spinner } from "@nextui-org/spinner";
-import { Button } from "@nextui-org/button";
 
 // Miscellaneous
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { table_columns } from "@/constants/constants";
+import Image from "next/image";
 
 // Utils
 import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
-import Image from "next/image";
 
 // Assets
-import gitMark from "../../../public/github-mark.svg";
+import gitMark from "../../../public/image/GitHub_Logo_White.png";
+import ErrorComponent from "@/components/ErrorComponent";
 
 export default function PageDetail({
   params,
 }: {
   params: { username: string };
 }) {
+  const [data, setData] = useState<TRepositories[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
+  const getRepositories = async (username: string, page: number) => {
+    try {
+      setIsLoading(true);
+      const res = await getUserRepo(username, page);
+      setData(res);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      setIsError(true);
+    }
+  };
+
+  useEffect(() => {
+    getRepositories(params?.username, page);
+  }, []);
+
   // Pagination
   const [page, setPage] = useState(1);
   const rowsPerPage = 10;
-
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["repo", params?.username],
-    queryFn: () => getUserRepo(params?.username, page),
-  });
-
-  // Pagination
   const pages = Math.ceil(data?.length / rowsPerPage);
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
@@ -53,14 +65,7 @@ export default function PageDetail({
 
   // Handle Error
   if (isError) {
-    return (
-      <section className="min-h-screen flex flex-col gap-3 justify-center items-center">
-        <h1>An error has occurred</h1>
-        <Button onClick={() => window.location.reload()}>
-          Click here to retry
-        </Button>
-      </section>
-    );
+    return <ErrorComponent retry={true} />;
   }
 
   return (
@@ -84,14 +89,14 @@ export default function PageDetail({
                   width={200}
                   height={200}
                 />
-                <div className="absolute bg-slate-500/60 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-3 justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                <div className="absolute bg-slate-500/60 w-full h-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-1 justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
                   <Image
                     src={gitMark}
                     alt="github user's image"
                     width={100}
                     height={100}
                   />
-                  <p>Github Profile</p>
+                  <p>Profile</p>
                 </div>
               </div>
             </a>
