@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getUserRepo } from "../../../../api/routes/github";
+import { getUserRepo } from "../../../api/routes/github";
 import { useEffect } from "react";
 
 export default function PageDetail({
