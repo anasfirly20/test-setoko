@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/table";
 import { Pagination } from "@nextui-org/pagination";
 import { Spinner } from "@nextui-org/spinner";
+import ErrorComponent from "@/components/ErrorComponent";
 
 // Miscellaneous
 import { useEffect, useMemo, useState } from "react";
@@ -25,7 +26,6 @@ import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
 
 // Assets
 import gitMark from "../../../public/image/GitHub_Logo_White.png";
-import ErrorComponent from "@/components/ErrorComponent";
 
 export default function PageDetail({
   params,
