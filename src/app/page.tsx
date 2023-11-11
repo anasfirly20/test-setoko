@@ -7,7 +7,7 @@ import { Tooltip } from "@nextui-org/tooltip";
 import { Skeleton } from "@nextui-org/skeleton";
 
 // Components
-import CardEmpty from "./components/CardEmpty";
+import CardEmpty from "@/components/CardEmpty";
 
 // Assets
 import gitMark from "../../public/image/github-mark-white.png";
@@ -100,8 +100,8 @@ export default function Home() {
                     <Skeleton isLoaded={!isLoading}>
                       <Image
                         src={item?.avatar_url}
-                        width={3000}
-                        height={3000}
+                        width={300}
+                        height={300}
                         sizes="100vw"
                         style={{ width: "100%", height: "auto" }}
                         alt={`Picture of ${item?.login}`}
@@ -122,7 +122,7 @@ export default function Home() {
                       </Skeleton>
                       <Skeleton isLoaded={!isLoading}>
                         <Link
-                          href={`/github/${item?.login}`}
+                          href={`/${item?.login}`}
                           className="text-crayola hover:underline"
                         >
                           Repositories

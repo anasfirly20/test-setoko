@@ -7,5 +7,6 @@ export const getUsersByQueries = async (string: string) => {
 
 export const getUserRepo = async (string: string) => {
   const res = await api.get(`/users/${string}/repos`);
+  console.log("RESSSS >>>", res);
   return res.data;
 };

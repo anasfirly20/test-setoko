@@ -1,5 +1,5 @@
 import Image from "next/image";
-import githubMark from "../../../../public/github-mark.svg";
+import githubMark from "../../../public/github-mark.svg";
 
 export default function CardEmpty() {
   return (
