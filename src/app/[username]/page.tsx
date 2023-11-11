@@ -19,7 +19,9 @@ import { Spinner } from "@nextui-org/spinner";
 // Miscellaneous
 import { table_columns } from "@/constants/constants";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { dateConverter } from "@/helpers/utils/utils";
+
+// Utils
+import { dateConverter, getStringAfterSlash } from "@/helpers/utils/utils";
 
 export default function PageDetail({
   params,
@@ -77,7 +79,7 @@ export default function PageDetail({
         >
           <TableHeader>
             {table_columns?.map((column, index: number) => (
-              <TableColumn key={index}>{column}</TableColumn>
+              <TableColumn key={index} width={30}>{column}</TableColumn>
             ))}
           </TableHeader>
           {items?.length > 0 ? (
@@ -94,18 +96,25 @@ export default function PageDetail({
                       target="_blank"
                       href={item?.html_url}
                     >
-                      {item?.full_name}
+                      {item?.full_name
+                        ? getStringAfterSlash(item?.full_name)
+                        : null}
                     </a>
                   </TableCell>
                   <TableCell>
-                    <a
-                      className="underline"
-                      rel="noopener noreferrer"
-                      target="_blank"
-                      href={item?.html_url}
-                    >
-                      LINK
-                    </a>
+                    {item?.created_at ? dateConverter(item?.created_at) : null}
+                  </TableCell>
+                  <TableCell>
+                    {item?.updated_at ? dateConverter(item?.updated_at) : null}
+                  </TableCell>
+                  <TableCell>
+                    {item?.pushed_at ? dateConverter(item?.pushed_at) : null}
+                  </TableCell>
+                  <TableCell>
+                    {item?.visibility}
+                  </TableCell>
+                  <TableCell>
+                    {item?.description ? item?.description : "-"}
                   </TableCell>
                 </TableRow>
               ))}
