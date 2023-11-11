@@ -4,10 +4,6 @@ import Image from "next/image";
 // Assets
 import errorImage from "../../public/image/error-image.svg";
 
-type TProps = {
-  onClick: () => void;
-};
-
 export default function ErrorComponent() {
   return (
     <section className="flex flex-col justify-center items-center gap-10 h-[70vh]">

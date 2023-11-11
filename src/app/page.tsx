@@ -82,7 +82,7 @@ export default function Home() {
           <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
             {data?.map((item) => (
               <>
-                <div
+                <section
                   key={item?.id}
                   className="border-2 p-2 relative bg-white rounded-md lg:hover:scale-105 transition-transform duration-300"
                 >
@@ -135,7 +135,7 @@ export default function Home() {
                       </Skeleton>
                     </section>
                   </section>
-                </div>
+                </section>
               </>
             ))}
           </section>
