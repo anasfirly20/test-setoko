@@ -38,6 +38,8 @@ export default function PageDetail({
     queryFn: () => getUserRepo(params?.username, page),
   });
 
+  console.log("DATA >>", data);
+
   // Pagination
   const pages = Math.ceil(data?.length / rowsPerPage);
   const items = useMemo(() => {
@@ -100,7 +102,7 @@ export default function PageDetail({
               isLoading={isLoading}
               loadingContent={<Spinner label="Loading..." />}
             >
-              {items?.map((item: any, index: number) => {
+              {items?.map((item: TRepositories, index: number) => {
                 const items_numbering = (page - 1) * rowsPerPage + index + 1;
                 return (
                   <TableRow key={item?.html_url}>

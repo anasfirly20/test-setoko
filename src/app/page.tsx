@@ -23,10 +23,10 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
-  const [searchString, setSearchString] = useState("");
-  const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [searchString, setSearchString] = useState<string>("");
+  const [data, setData] = useState<TUsers[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const getUsers = async (string: string) => {
     try {
@@ -80,7 +80,7 @@ export default function Home() {
       ) : data?.length > 0 ? (
         <>
           <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
-            {data?.map((item: any) => (
+            {data?.map((item) => (
               <>
                 <div
                   key={item?.id}
