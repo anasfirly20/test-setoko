@@ -11,6 +11,7 @@ import CardEmpty from "@/components/CardEmpty";
 
 // Assets
 import gitMark from "../../public/image/github-mark-white.png";
+import errorImage from "../../public/image/error-image.svg";
 
 // api
 import { getUsersByQueries } from "../../api/routes/github";
@@ -20,11 +21,13 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import ErrorComponent from "@/components/ErrorComponent";
 
 export default function Home() {
   const [searchString, setSearchString] = useState("");
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const getUsers = async (string: string) => {
     try {
@@ -34,8 +37,9 @@ export default function Home() {
       setData(filteredData);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
       setIsLoading(false);
+      setIsError(true);
     }
   };
 
@@ -45,8 +49,10 @@ export default function Home() {
     }
   };
 
+  // Handle Error
+
   return (
-    <section className="flex flex-col justify-center gap-5 xl:pb-shorter">
+    <section className="flex flex-col justify-center gap-5 max-sm:pb-normal">
       <Input
         placeholder="Search User..."
         isClearable
@@ -72,14 +78,16 @@ export default function Home() {
       >
         Search
       </Button>
-      {data?.length > 0 ? (
+      {isError ? (
+        <ErrorComponent />
+      ) : data?.length > 0 ? (
         <>
           <section className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-10">
             {data?.map((item: any) => (
               <>
                 <div
                   key={item?.id}
-                  className="border-2 p-2 relative bg-white rounded-md hover:scale-110 transition-transform duration-300"
+                  className="border-2 p-2 relative bg-white rounded-md lg:hover:scale-105 transition-transform duration-300"
                 >
                   <a
                     href={item?.html_url}
@@ -110,26 +118,26 @@ export default function Home() {
                       />
                     </Skeleton>
                   </figure>
-                  <div className="text-black mt-5 max-sm:mt-20 space-y-3">
+                  <section className="text-black mt-5 space-y-3">
                     <Skeleton isLoaded={!isLoading}>
                       <p className="text-center font-semibold text-xl">
                         {item?.login}
                       </p>
                     </Skeleton>
-                    <div className="flex justify-between flex-wrap max-xl:justify-center">
+                    <section className="flex justify-center max-sm:gap-10 sm:flex-col items-center">
                       <Skeleton isLoaded={!isLoading}>
                         <p>Git score: {item?.score}</p>
                       </Skeleton>
                       <Skeleton isLoaded={!isLoading}>
                         <Link
                           href={`/${item?.login}`}
-                          className="text-crayola hover:underline"
+                          className="text-gray-600 hover:underline"
                         >
                           Repositories
                         </Link>
                       </Skeleton>
-                    </div>
-                  </div>
+                    </section>
+                  </section>
                 </div>
               </>
             ))}

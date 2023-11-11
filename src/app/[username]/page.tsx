@@ -35,7 +35,6 @@ export default function PageDetail({
   const { data, isLoading, isError } = useQuery({
     queryKey: ["repo", params?.username],
     queryFn: () => getUserRepo(params?.username),
-    retry: 0,
   });
 
   // Pagination
@@ -52,7 +51,13 @@ export default function PageDetail({
 
   // Handle Error
   if (isError) {
-    return <ErrorComponent onClick={() => window.location.reload()} />;
+    return (
+      <section className="min-h-screen flex justify-center items-center">
+        <Button onClick={() => window.location.reload()}>
+          Click here to retry
+        </Button>
+      </section>
+    );
   }
 
   return (
