@@ -8,20 +8,19 @@ import { Skeleton } from "@nextui-org/skeleton";
 
 // Components
 import CardEmpty from "@/components/CardEmpty";
+import ErrorComponent from "@/components/ErrorComponent";
 
 // Assets
 import gitMark from "../../public/image/github-mark-white.png";
-import errorImage from "../../public/image/error-image.svg";
 
 // api
 import { getUsersByQueries } from "../../api/routes/github";
 
 // Miscellaneous
-import { Icon } from "@iconify/react";
 import { useState } from "react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
-import ErrorComponent from "@/components/ErrorComponent";
 
 export default function Home() {
   const [searchString, setSearchString] = useState("");
@@ -48,8 +47,6 @@ export default function Home() {
       getUsers(searchString);
     }
   };
-
-  // Handle Error
 
   return (
     <section className="flex flex-col justify-center gap-5 max-sm:pb-normal">

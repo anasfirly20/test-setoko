@@ -38,8 +38,8 @@ export default function PageDetail({
     queryFn: () => getUserRepo(params?.username, page),
   });
 
+  // Pagination
   const pages = Math.ceil(data?.length / rowsPerPage);
-
   const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
