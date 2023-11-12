@@ -17,7 +17,7 @@ import gitMark from "../../public/image/github-mark-white.png";
 import { getUsersByQueries } from "../../api/routes/github";
 
 // Miscellaneous
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,6 +72,7 @@ export default function Home() {
         }
         onClick={handleSearch}
         isLoading={isLoading}
+        isDisabled={searchString ? false : true}
       >
         Search
       </Button>
