@@ -71,7 +71,7 @@ export default function PageDetail({
   return (
     <section>
       {isLoading ? (
-        <section className="min-h-screen flex justify-center items-center">
+        <section className="h-[70vh] flex justify-center items-center">
           <Spinner color="success" label="Loading..." />
         </section>
       ) : (
@@ -132,7 +132,7 @@ export default function PageDetail({
             {items?.length > 0 ? (
               <TableBody
                 isLoading={isLoading}
-                loadingContent={<Spinner label="Loading..." />}
+                loadingContent={<Spinner color="success" label="Loading..." />}
               >
                 {items?.map((item: TRepositories, index: number) => {
                   const items_numbering = (page - 1) * rowsPerPage + index + 1;
